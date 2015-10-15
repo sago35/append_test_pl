@@ -13,7 +13,7 @@ my $t = Time::Moment->now;
 
 open my $wfh, ">>", "log.txt" or die $!;
 printf "%s 1\n", $no;
-printf $wfh "%s %s\n", $t->strftime("%Y/%m/%d %H:%M:%S"), $no;
+printf $wfh "%s %s\n", Time::Moment->now->strftime("%Y/%m/%d %H:%M:%S"), $no;
 printf "%s 2\n", $no;
 
 #sleep ($t->millisecond % 5);
@@ -21,7 +21,7 @@ sleep 5;
 
 
 printf "%s 3\n", $no;
-printf $wfh "%s %s\n", $t->strftime("%Y/%m/%d %H:%M:%S"), $no;
+printf $wfh "%s %s\n", Time::Moment->now->strftime("%Y/%m/%d %H:%M:%S"), $no;
 printf "%s 4\n", $no;
 
 close $wfh;
