@@ -3,10 +3,17 @@ use warnings;
 use utf8;
 use Path::Tiny;
 use Time::Moment;
+use LWP::Simple;
 
 my $no = shift // die;
 
 my $t = Time::Moment->now;
+
+my $some_large_file = "xxx.txt";
+if (not -e $some_large_file) {
+    my $content = get 'http://cpansearch.perl.org/src/DAGOLDEN/Path-Tiny-0.072/lib/Path/Tiny.pm';
+    path($some_large_file)->spew_utf8($content);
+}
 
 
 # locked => 1 だと、opena_utf8()時点で排他がかかる
@@ -16,9 +23,7 @@ printf "%s 1\n", $no;
 printf $wfh "%s %s\n", Time::Moment->now->strftime("%Y/%m/%d %H:%M:%S"), $no;
 
 
-# 何でも良いがある程度大きなファイルを読み込ませる
-# ORLite.pm            49080 2012/10/01 7:48:41
-my $path = path('c:\strawberry\perl\site\lib\ORLite.pm');
+my $path = path($some_large_file);
 foreach my $line ($path->lines) {
     chomp $line;
     printf $wfh "%s %s %s\n", Time::Moment->now->strftime("%Y/%m/%d %H:%M:%S"), $no, $line;
