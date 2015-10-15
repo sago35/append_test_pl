@@ -6,6 +6,7 @@ use Time::Moment;
 use LWP::Simple;
 
 my $no = shift // die;
+my $locked = $ENV{APPEND_TEST_LOCKED} // 1;
 
 my $t = Time::Moment->now;
 
@@ -17,7 +18,7 @@ if (not -e $some_large_file) {
 
 
 # locked => 1 だと、opena_utf8()時点で排他がかかる
-my $wfh = path("log.txt")->opena_utf8({locked => 1});
+my $wfh = path("log.txt")->opena_utf8({locked => $locked});
 
 printf "%s 1\n", $no;
 printf $wfh "%s %s\n", Time::Moment->now->strftime("%Y/%m/%d %H:%M:%S"), $no;
@@ -31,7 +32,7 @@ foreach my $line ($path->lines) {
 printf "%s 2\n", $no;
 
 #sleep ($t->millisecond % 5);
-sleep 5;
+sleep 1;
 
 
 printf "%s 3\n", $no;
