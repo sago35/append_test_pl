@@ -1,5 +1,11 @@
 # append_test_pl
-test
+
+Path::Tinyの`opena({locked => 1})`の動きを確認する。
+
+```
+my $wfh = path("log.txt")->opena_utf8({locked => $locked});
+```
+
 
 `gmake --jobs` として並列実行した際に、出力ファイルが壊れないかを確認する。  
 確認は、`perl check.pl`でdieしないかどうかで確認。
