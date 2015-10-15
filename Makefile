@@ -1,4 +1,9 @@
-all: A B C D E F
+all: del_log A B C D E F
+	perl check.pl
+
+.PHONEY: del_log check_log
+del_log:
+	perl -e "unlink 'log.txt'"
 
 A:
 	perl -e "sleep 1"
